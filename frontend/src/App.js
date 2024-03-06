@@ -1,12 +1,14 @@
 import AllRoutes from "./AllRoutes/AllRoutes";
 import Navbar from "./components/Navbar";
-import "./App.css"
+import { Toaster } from "react-hot-toast";
+import "./App.css";
 
 function App() {
   return (
     <div>
       <Navbar />
       <AllRoutes />
+      <Toaster />
     </div>
   );
 }

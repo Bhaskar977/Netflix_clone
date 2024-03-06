@@ -1,5 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const cors = require("cors");
+
 const cookieParser = require("cookie-parser");
 const databaseConnection = require("./utils/database");
 const userRoute = require("./routes/userRoute");
@@ -17,6 +19,13 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
+
+const corsOptions = {
+  origin: `http://localhost:3000`,
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
+app.use(cors(corsOptions));
 
 //api
 app.use("/api/v1/user", userRoute);
