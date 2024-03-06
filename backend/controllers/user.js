@@ -74,8 +74,9 @@ const Login = async (req, res) => {
       .status(200)
       .cookie("token", token, { httpOnly: true })
       .json({
-        message: `Welcome Back ${user.name}`,
+        message: `Welcome ${user.name}`,
         token,
+        user,
         success: true,
       });
   } catch (error) {
@@ -83,12 +84,14 @@ const Login = async (req, res) => {
   }
 };
 
-const Logout = async(req,res) =>{
-    return await res.status(200).cookie("token","",{expiresIn:new Date(Date.now()),httpOnly:true})
+const Logout = async (req, res) => {
+  return await res
+    .status(200)
+    .cookie("token", "", { expiresIn: new Date(Date.now()), httpOnly: true })
     .json({
-        message:"Logout successfully",
-        success:true
-    })
-}
+      message: "Logout successfully",
+      success: true,
+    });
+};
 
-module.exports = { Register, Login,Logout };
+module.exports = { Register, Login, Logout };

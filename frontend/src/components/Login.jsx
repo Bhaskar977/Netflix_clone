@@ -3,6 +3,8 @@ import axios from "axios";
 import { API_END_POINT } from "../utils/constant";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading, setUser } from "../redux/userSlice";
 
 const initialState = {
   name: "",
@@ -14,6 +16,8 @@ const Login = () => {
   const [status, setStatus] = useState(false);
   const [formData, setFormData] = useState(initialState);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { isLoading } = useSelector((store) => store.app);
 
   const handleStatus = () => {
     setStatus(!status);
@@ -29,6 +33,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    dispatch(setLoading(true));
     if (status) {
       const user = { email, password };
       try {
@@ -40,12 +45,15 @@ const Login = () => {
         } else {
           toast.error("Login failed");
         }
+        dispatch(setUser(res?.data?.user));
         navigate("/browse");
       } catch (error) {
         toast.error(
           error.response ? error.response.data.message : "Login failed"
         );
         console.log(error);
+      } finally {
+        dispatch(setLoading(false));
       }
       setFormData({ email: "", password: "" });
     } else {
@@ -64,6 +72,8 @@ const Login = () => {
           error.response ? error.response.data.message : "Registration failed"
         );
         console.log(error);
+      }finally{
+        dispatch(setLoading(false))
       }
       setFormData({ name: "", email: "", password: "" });
     }
@@ -137,7 +147,7 @@ const Login = () => {
           </>
         )}
         <button className="bg-red-600 mt-3 p-3 text-white rounded-sm font-medium">
-          {status ? "Login" : "SignUp"}
+          {isLoading ? "Loading..." : status ? "Login" : "SignUp"}
         </button>
         <p className="text-white">
           {status ? "New user?" : "Already have an account?"}
