@@ -1,4 +1,8 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { API_END_POINT } from "../utils/constant";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router";
 
 const initialState = {
   name: "",
@@ -9,6 +13,7 @@ const initialState = {
 const Login = () => {
   const [status, setStatus] = useState(false);
   const [formData, setFormData] = useState(initialState);
+  const navigate = useNavigate();
 
   const handleStatus = () => {
     setStatus(!status);
@@ -22,10 +27,46 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    setFormData({ name: "", email: "", password: "" });
+    if (status) {
+      const user = { email, password };
+      try {
+        const res = await axios.post(`${API_END_POINT}/login`, user);
+        console.log(res);
+        if (res.data && res.data.success) {
+          toast.success(res.data.message);
+          localStorage.setItem("token", res.data.token);
+        } else {
+          toast.error("Login failed");
+        }
+        navigate("/browse");
+      } catch (error) {
+        toast.error(
+          error.response ? error.response.data.message : "Login failed"
+        );
+        console.log(error);
+      }
+      setFormData({ email: "", password: "" });
+    } else {
+      const user = { name, email, password };
+      try {
+        const res = await axios.post(`${API_END_POINT}/register`, user);
+        console.log(res);
+        if (res.data && res.data.success) {
+          toast.success(res.data.message);
+        } else {
+          toast.error("Registration failed");
+        }
+        setStatus(true);
+      } catch (error) {
+        toast.error(
+          error.response ? error.response.data.message : "Registration failed"
+        );
+        console.log(error);
+      }
+      setFormData({ name: "", email: "", password: "" });
+    }
   };
 
   const { name, email, password } = formData;
