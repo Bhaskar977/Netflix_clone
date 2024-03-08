@@ -1,6 +1,6 @@
 import React from 'react';
 import { IoIosArrowDropdown } from 'react-icons/io';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { API_END_POINT } from '../utils/constant';
@@ -9,7 +9,13 @@ import { useNavigate } from 'react-router';
 import { getToggle } from '../redux/movieSlice';
 
 const Navbar = () => {
-  const user = useSelector((store) => store?.app?.user);
+  const { user, toggle } = useSelector(
+    (store) => ({
+      user: store.app.user,
+      toggle: store.movie.toggle,
+    }),
+    shallowEqual
+  );
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -49,7 +55,7 @@ const Navbar = () => {
             <button
               onClick={handleSearch}
               className='bg-red-800 text-white px-4 py-2 ml-2'>
-              Search Movie
+              {toggle ? 'Home' : 'Search Movies'}
             </button>
           </div>
         </div>

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import MainContainer from './MainContainer';
 import MovieContainer from './MovieContainer';
@@ -7,10 +7,16 @@ import useNowPlayingMovies from '../hooks/useNowPlayingMovies';
 import usePopularMovies from '../hooks/usePopularMovies';
 import useTopRatedMovies from '../hooks/useTopRatedMovies';
 import useUpcomingMovie from '../hooks/useUpcomingMovie';
+import SearchMovie from './SearchMovie';
 
 const Browse = () => {
-  const { user } = useSelector((store) => store.app);
-  // const { toggle } = useSelector((store) => store.movie);
+  const { user, toggle } = useSelector(
+    (store) => ({
+      user: store.app.user,
+      toggle: store.movie.toggle,
+    }),
+    shallowEqual
+  );
   // console.log(toggle);
   const navigate = useNavigate();
 
@@ -24,12 +30,18 @@ const Browse = () => {
     if (!user) {
       navigate('/');
     }
-  }, []);
+  }, [user, navigate]);
 
   return (
     <div>
-      <MainContainer />
-      <MovieContainer />
+      {toggle ? (
+        <SearchMovie />
+      ) : (
+        <>
+          <MainContainer />
+          <MovieContainer />
+        </>
+      )}
     </div>
   );
 };
