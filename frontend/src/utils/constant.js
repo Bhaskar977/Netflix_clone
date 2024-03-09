@@ -1,4 +1,5 @@
-export const API_END_POINT = 'https://netflix-clone-yd09.onrender.com';
+// export const API_END_POINT = 'http://localhost:4000/api/v1/user';
+export const API_END_POINT = 'https://netflix-clone-31v9.onrender.com';
 
 export const options = {
   method: 'GET',
