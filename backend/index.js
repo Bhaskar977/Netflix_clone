@@ -1,16 +1,16 @@
-const express = require("express");
-const dotenv = require("dotenv");
-const cors = require("cors");
+const express = require('express');
+const dotenv = require('dotenv');
+const cors = require('cors');
 
-const cookieParser = require("cookie-parser");
-const databaseConnection = require("./utils/database");
-const userRoute = require("./routes/userRoute");
+const cookieParser = require('cookie-parser');
+const databaseConnection = require('./utils/database');
+const userRoute = require('./routes/userRoute');
 
 //Connection to the Database
 databaseConnection();
 
 dotenv.config({
-  path: ".env",
+  path: '.env',
 });
 
 const app = express();
@@ -21,14 +21,15 @@ app.use(express.json());
 app.use(cookieParser());
 
 const corsOptions = {
-  origin: `http://localhost:3000`,
+  // origin: `http://localhost:3000`,
+  origin: `*`,
   credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
 };
 app.use(cors(corsOptions));
 
 //api
-app.use("/api/v1/user", userRoute);
+app.use('/api/v1/user', userRoute);
 
 app.listen(process.env.PORT, () => {
   console.log(`server is running on port ${process.env.PORT}`);
