@@ -20,12 +20,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
-const corsOptions = {
-  origin: `http://localhost:3000`,
-  credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization'],
-};
-app.use(cors(corsOptions));
+// const corsOptions = {
+//   origin: `http://localhost:3000`,
+//   credentials: true,
+//   allowedHeaders: ['Content-Type', 'Authorization'],
+// };
+app.use(cors({ origin: '*' }));
 
 //api
 app.use('/api/v1/user', userRoute);
