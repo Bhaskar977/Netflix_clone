@@ -1,11 +1,13 @@
-import { configureStore } from "@reduxjs/toolkit";
-import userReducer from "./userSlice";
-import movieReducer from "./movieSlice";
+import { configureStore } from '@reduxjs/toolkit';
+import userReducer from './userSlice';
+import movieReducer from './movieSlice';
+import searchReducer from './searchSlice';
 
 const store = configureStore({
   reducer: {
-    app:userReducer,
-    movie:movieReducer
+    app: userReducer,
+    movie: movieReducer,
+    search: searchReducer,
   },
 });
 

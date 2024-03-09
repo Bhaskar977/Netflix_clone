@@ -9,6 +9,9 @@ export const options = {
   },
 };
 
+export const Search_Movie_Url =
+  'https://api.themoviedb.org/3/search/movie?query=';
+
 export const Now_playing_Movie =
   'https://api.themoviedb.org/3/movie/now_playing';
 
