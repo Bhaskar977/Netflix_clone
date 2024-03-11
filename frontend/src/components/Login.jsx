@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { API_END_POINT } from "../utils/constant";
-import toast from "react-hot-toast";
-import { useNavigate } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
-import { setLoading, setUser } from "../redux/userSlice";
+import React, { useState } from 'react';
+import axios from 'axios';
+import { API_END_POINT, basePathEndPoint } from '../utils/constant';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLoading, setUser } from '../redux/userSlice';
 
 const initialState = {
-  name: "",
-  email: "",
-  password: "",
+  name: '',
+  email: '',
+  password: '',
 };
 
 const Login = () => {
@@ -37,45 +37,51 @@ const Login = () => {
     if (status) {
       const user = { email, password };
       try {
-        const res = await axios.post(`${API_END_POINT}/login`, user);
+        const res = await axios.post(
+          `${API_END_POINT}${basePathEndPoint}/login`,
+          user
+        );
         console.log(res);
         if (res.data && res.data.success) {
           toast.success(res.data.message);
-          localStorage.setItem("token", res.data.token);
+          localStorage.setItem('token', res.data.token);
         } else {
-          toast.error("Login failed");
+          toast.error('Login failed');
         }
         dispatch(setUser(res?.data?.user));
-        navigate("/browse");
+        navigate('/browse');
       } catch (error) {
         toast.error(
-          error.response ? error.response.data.message : "Login failed"
+          error.response ? error.response.data.message : 'Login failed'
         );
         console.log(error);
       } finally {
         dispatch(setLoading(false));
       }
-      setFormData({ email: "", password: "" });
+      setFormData({ email: '', password: '' });
     } else {
       const user = { name, email, password };
       try {
-        const res = await axios.post(`${API_END_POINT}/register`, user);
+        const res = await axios.post(
+          `${API_END_POINT}${basePathEndPoint}/register`,
+          user
+        );
         console.log(res);
         if (res.data && res.data.success) {
           toast.success(res.data.message);
         } else {
-          toast.error("Registration failed");
+          toast.error('Registration failed');
         }
         setStatus(true);
       } catch (error) {
         toast.error(
-          error.response ? error.response.data.message : "Registration failed"
+          error.response ? error.response.data.message : 'Registration failed'
         );
         console.log(error);
-      }finally{
-        dispatch(setLoading(false))
+      } finally {
+        dispatch(setLoading(false));
       }
-      setFormData({ name: "", email: "", password: "" });
+      setFormData({ name: '', email: '', password: '' });
     }
   };
 
@@ -83,37 +89,36 @@ const Login = () => {
 
   return (
     <div>
-      <div className="absolute">
+      <div className='absolute'>
         <img
-          className="w-[100vw] h-[100vh]"
-          src="https://cdn.mos.cms.futurecdn.net/rDJegQJaCyGaYysj2g5XWY.jpg"
-          alt=""
+          className='w-[100vw] h-[100vh]'
+          src='https://cdn.mos.cms.futurecdn.net/rDJegQJaCyGaYysj2g5XWY.jpg'
+          alt=''
         />
       </div>
       <form
-        className="flex flex-col p-12 w-3/12 my-36 left-0 right-0 mx-auto item-center justify-center absolute rounded-md bg-black opacity-80"
-        onSubmit={handleSubmit}
-      >
+        className='flex flex-col p-12 w-3/12 my-36 left-0 right-0 mx-auto item-center justify-center absolute rounded-md bg-black opacity-80'
+        onSubmit={handleSubmit}>
         {status ? (
-          <h1 className="text-white text-3xl mb-5 font-bold">Login</h1>
+          <h1 className='text-white text-3xl mb-5 font-bold'>Login</h1>
         ) : (
-          <h1 className="text-white text-3xl mb-5 font-bold">SignUp</h1>
+          <h1 className='text-white text-3xl mb-5 font-bold'>SignUp</h1>
         )}
         {status ? (
           <>
             <input
-              type="text"
-              placeholder="E-mail"
-              name="email"
-              className="outline-none p-3 my-2 rounded-sm bg-gray-800 text-white"
+              type='text'
+              placeholder='E-mail'
+              name='email'
+              className='outline-none p-3 my-2 rounded-sm bg-gray-800 text-white'
               value={email}
               onChange={handleInputChange}
             />
             <input
-              type="password"
-              placeholder="Password"
-              name="password"
-              className="outline-none p-3 my-2 rounded-sm bg-gray-800 text-white"
+              type='password'
+              placeholder='Password'
+              name='password'
+              className='outline-none p-3 my-2 rounded-sm bg-gray-800 text-white'
               value={password}
               onChange={handleInputChange}
             />
@@ -121,41 +126,40 @@ const Login = () => {
         ) : (
           <>
             <input
-              type="text"
-              placeholder="Full Name"
-              name="name"
-              className="outline-none p-3 my-2 rounded-sm bg-gray-800 text-white"
+              type='text'
+              placeholder='Full Name'
+              name='name'
+              className='outline-none p-3 my-2 rounded-sm bg-gray-800 text-white'
               value={name}
               onChange={handleInputChange}
             />
             <input
-              type="text"
-              placeholder="E-mail"
-              name="email"
-              className="outline-none p-3 my-2 rounded-sm bg-gray-800 text-white"
+              type='text'
+              placeholder='E-mail'
+              name='email'
+              className='outline-none p-3 my-2 rounded-sm bg-gray-800 text-white'
               value={email}
               onChange={handleInputChange}
             />
             <input
-              type="password"
-              placeholder="Password"
-              name="password"
-              className="outline-none p-3 my-2 rounded-sm bg-gray-800 text-white"
+              type='password'
+              placeholder='Password'
+              name='password'
+              className='outline-none p-3 my-2 rounded-sm bg-gray-800 text-white'
               value={password}
               onChange={handleInputChange}
             />
           </>
         )}
-        <button className="bg-red-600 mt-3 p-3 text-white rounded-sm font-medium">
-          {isLoading ? "Loading..." : status ? "Login" : "SignUp"}
+        <button className='bg-red-600 mt-3 p-3 text-white rounded-sm font-medium'>
+          {isLoading ? 'Loading...' : status ? 'Login' : 'SignUp'}
         </button>
-        <p className="text-white">
-          {status ? "New user?" : "Already have an account?"}
+        <p className='text-white'>
+          {status ? 'New user?' : 'Already have an account?'}
           <span
-            className="text-blue-800 ml-1 font-medium cursor-pointer"
-            onClick={handleStatus}
-          >
-            {status ? "SignUp" : "Login"}
+            className='text-blue-800 ml-1 font-medium cursor-pointer'
+            onClick={handleStatus}>
+            {status ? 'SignUp' : 'Login'}
           </span>
         </p>
       </form>
