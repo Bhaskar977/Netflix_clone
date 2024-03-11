@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 const corsOptions = {
-  origin: `https://netflix-clone-31v9.onrender.com`,
+  origin: `https://cozy-banoffee-7d60b4.netlify.app/`,
   credentials: true,
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
