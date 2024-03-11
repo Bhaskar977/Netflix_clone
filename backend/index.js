@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 const corsOptions = {
-  origin: `https://cozy-banoffee-7d60b4.netlify.app`,
+  origin: `https://effervescent-salamander-170398.netlify.app`,
   // credentials: true,
   // allowedHeaders: ['Content-Type', 'Authorization'],
 };
