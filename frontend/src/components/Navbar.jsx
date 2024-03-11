@@ -3,7 +3,7 @@ import { IoIosArrowDropdown } from 'react-icons/io';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { API_END_POINT } from '../utils/constant';
+import { API_END_POINT, basePathEndPoint } from '../utils/constant';
 import { setUser } from '../redux/userSlice';
 import { useNavigate } from 'react-router';
 import { getToggle } from '../redux/movieSlice';
@@ -21,7 +21,7 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      const res = await axios.get(`${API_END_POINT}/logout`);
+      const res = await axios.get(`${API_END_POINT}${basePathEndPoint}/logout`);
       dispatch(setUser(null));
       navigate('/');
       if (res.data.success) {
