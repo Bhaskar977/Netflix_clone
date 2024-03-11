@@ -21,9 +21,9 @@ app.use(express.json());
 app.use(cookieParser());
 
 const corsOptions = {
-  origin: `https://cozy-banoffee-7d60b4.netlify.app/`,
-  credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  origin: `https://cozy-banoffee-7d60b4.netlify.app`,
+  // credentials: true,
+  // allowedHeaders: ['Content-Type', 'Authorization'],
 };
 app.use(cors(corsOptions));
 
